@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from movesense_bt.timestamp_to_utf import TimestampConverter
-
+from rich import print
 
 class NotificationHandler:
     def __init__(self):
@@ -33,6 +33,7 @@ class NotificationHandler:
 
     async def notification_handler_ecg(self, _, dv, data_storage, diff):
         """Simple notification handler for ECG sensor"""
+        print("--ecg")
         val = []
         samples = 16
 

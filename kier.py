@@ -77,12 +77,15 @@ async def _measure(name: str, duration: int):
 
         total = 0
         for value in track(range(duration), description="Measuring 📡 "):
-            time.sleep(1)
+            await asyncio.sleep(1)
             total += 1
 
         await stop_connection(client)
 
-        csv_file = 'data.csv'
+        print(len(data_storage["ecg"]))
+
+        # Get first of ecg - modify if not only for ECG
+        csv_file = 'data' + str(data_storage["ecg"][0][0]) + '.csv'
 
         with open(csv_file, mode='w', newline='') as file:
             writer = csv.writer(file)
@@ -94,8 +97,10 @@ async def _measure(name: str, duration: int):
                     writer.writerow([data_type, value[0], value[1]])
 
                 writer.writerow([])
+
         
-        print(f"Saved measurement from [bold blue]{name}[/bold blue] to file [blue]data.csv[/blue] 💾")
+        
+        print(f"Saved measurement from [bold blue]{name}[/bold blue] to file [blue]{csv_file}[/blue] 💾")
 
 @app.command()
 def measure(name: str, duration: int):
