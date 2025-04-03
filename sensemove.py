@@ -1,10 +1,14 @@
 import time
 import pickle
+import asyncio
+import csv
 
 from rich import print
 from rich.progress import track
 
 import typer
+
+from movesense_bt.timed_conncection import launch_timed, start_connection, stop_connection, timed_connection
 
 app = typer.Typer()
 
@@ -52,14 +56,51 @@ def list():
     for sensor in list_sensors:
         print(f"[bold blue]{sensor["name"]}[/bold blue] {sensor["mac"]}")
 
+async def _measure(name: str, duration: int):
+    print(f"Start of measurement for [bold blue]{name}[/bold blue]")
+
+    list_sensors = load_sensors()
+
+    if not any(d['name'] == name for d in list_sensors):
+        print("[red]No such sensor! 🚫[/red]")
+        return
+    else:
+        mac = next(d for d in list_sensors if d["name"] == name)["mac"]
+    
+        client = await start_connection(mac)
+        data_storage = {"ecg":[]}
+        
+        await timed_connection(
+                units=[{"name": "ecg", "probing": "250"}],
+                df=data_storage,
+                client=client)
+
+        total = 0
+        for value in track(range(duration), description="Measuring 📡 "):
+            time.sleep(1)
+            total += 1
+
+        await stop_connection(client)
+
+        csv_file = 'data.csv'
+
+        with open(csv_file, mode='w', newline='') as file:
+            writer = csv.writer(file)
+
+            for data_type, values in data_storage.items():
+                writer.writerow([data_type, "Timestamp", "Value"])
+
+                for value in values:
+                    writer.writerow([data_type, value[0], value[1]])
+
+                writer.writerow([])
+        
+        print(f"Saved measurement from [bold blue]{name}[/bold blue] to file [blue]data.csv[/blue] 💾")
+
 @app.command()
 def measure(name: str, duration: int):
-    print(f"Start of measurement for [bold blue]{name}[/bold blue]")
-    total = 0
-    for value in track(range(duration), description="Measuring 📡 "):
-        time.sleep(1)
-        total += 1
-    print(f"Saved measurement from [bold blue]{name}[/bold blue] to file [blue]data.csv[/blue] 💾")
+    asyncio.run(_measure(name, duration))
+
 
 if __name__ == "__main__":
     app()
