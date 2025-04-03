@@ -34,13 +34,11 @@ class MovesenseConnection():
 
     async def start_connection(self, data_storage, client, units):
         self.notification_handler.reset_timestamps()
-        print("start measure")
         try:
             for unit in units:
                 if unit["name"] == "ecg":
                     await client.write_gatt_char(ECG_PROBING_UUID, probing_to_diff[unit["probing"]])
                     diff = int.from_bytes((await client.read_gatt_char(ECG_PROBING_UUID))[:1], byteorder='little')
-                    print(diff)
                     async def ecg_handler(_, data):
                         d = DataView(data)
                         await self.notification_handler.notification_handler_ecg(_, d, data_storage["ecg"], diff)
