@@ -54,7 +54,7 @@ def list():
     list_sensors = load_sensors()
     print("List of registered sensors 📡:")
     for sensor in list_sensors:
-        print(f"[bold blue]{sensor["name"]}[/bold blue] {sensor["mac"]}")
+        print(f'[bold blue]{sensor["name"]}[/bold blue] {sensor["mac"]}')
 
 async def _measure(name: str, duration: int):
     print(f"Start of measurement for [bold blue]{name}[/bold blue]")

@@ -33,7 +33,6 @@ class NotificationHandler:
 
     async def notification_handler_ecg(self, _, dv, data_storage, diff):
         """Simple notification handler for ECG sensor"""
-        print("--ecg")
         val = []
         samples = 16
 
