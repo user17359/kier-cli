@@ -27,7 +27,7 @@ kier-cli --help
 
 ## Usage
 
-App maintains list of sensors for measurement, to add an sensor use:
+App maintains list of sensors for measurement, to add a sensor use:
 ```sh
 kier-cli add [name] [mac-address]
 ```
