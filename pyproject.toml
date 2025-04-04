@@ -1,0 +1,20 @@
+[project]
+name = "kier-cli"
+version = "0.1.0"
+description = "Simple CLI program for collecting Movesense data"
+authors = [
+    {name = "user17359",email = "blazejryszard@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "typer (>=0.15.2,<0.16.0)",
+    "bleak (>=0.22.3,<0.23.0)"
+]
+
+[tool.poetry.scripts]
+kier-cli = "kier_cli.main:app"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

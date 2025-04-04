@@ -1,7 +1,8 @@
 from datetime import datetime
 
-from movesense_bt.timestamp_to_utf import TimestampConverter
 from rich import print
+
+from kier_cli.movesense_bt.timestamp_to_utf import TimestampConverter
 
 class NotificationHandler:
     def __init__(self):

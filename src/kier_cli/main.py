@@ -8,7 +8,8 @@ from rich.progress import track
 
 import typer
 
-from movesense_bt.timed_conncection import launch_timed, start_connection, stop_connection, timed_connection
+from kier_cli.movesense_bt.timed_conncection import start_connection, stop_connection, timed_connection
+
 
 app = typer.Typer()
 

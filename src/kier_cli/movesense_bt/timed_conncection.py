@@ -3,7 +3,7 @@ import asyncio
 from bleak import BleakClient, BleakError
 from rich import print
 
-from movesense_bt.movesense_conncection import MovesenseConnection
+from kier_cli.movesense_bt.movesense_conncection import MovesenseConnection
 
 disconnect_initiated = False
 reconnect_attempts = 5

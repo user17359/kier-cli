@@ -1,10 +1,11 @@
-from movesense_bt.notification_handlers import NotificationHandler
-from movesense_bt.translations import probing_to_diff
 
 from rich import print
 from bleak.uuids import normalize_uuid_16
 
-from movesense_bt.utils.data_view import DataView
+from kier_cli.movesense_bt.notification_handlers import NotificationHandler
+from kier_cli.movesense_bt.utils.data_view import DataView
+from kier_cli.movesense_bt.translations import probing_to_diff
+
 
 ECG_VOLTAGE_UUID = normalize_uuid_16(0x2BDD)
 ECG_PROBING_UUID = normalize_uuid_16(0x2BE3)
